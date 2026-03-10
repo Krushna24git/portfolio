@@ -404,15 +404,16 @@
       .profile-image-wrap {
         display: flex;
         justify-content: center;
-        margin-bottom: 32px;
+        margin-bottom: 36px;
+        position: relative;
       }
       .profile-image {
-        width: 120px;
-        height: 120px;
+        width: 140px;
+        height: 140px;
         border-radius: 50%;
         object-fit: cover;
         object-position: center top;
-        border: 2px solid var(--border2);
+        border: 2.5px solid var(--border2);
         filter: grayscale(20%);
         transition:
           filter 0.4s ease,
@@ -420,19 +421,21 @@
           box-shadow 0.4s ease,
           transform 0.4s ease;
         box-shadow:
-          0 0 0 4px var(--bg),
-          0 0 0 5px var(--border);
+          0 0 0 5px var(--bg),
+          0 0 0 6px var(--border),
+          0 4px 24px rgba(0, 0, 0, 0.4);
         will-change: transform;
       }
       @media (hover: hover) {
         .profile-image:hover {
           filter: grayscale(0%);
-          border-color: #444;
+          border-color: #555;
           box-shadow:
-            0 0 0 4px var(--bg),
-            0 0 0 5px #444,
-            0 0 30px rgba(255, 255, 255, 0.04);
-          transform: scale(1.03);
+            0 0 0 5px var(--bg),
+            0 0 0 6px #555,
+            0 0 40px rgba(255, 255, 255, 0.06),
+            0 8px 32px rgba(0, 0, 0, 0.3);
+          transform: scale(1.04);
         }
       }
 
@@ -1110,10 +1113,19 @@
           gap: 12px;
         }
         .container {
-          padding: 0 18px;
+          padding: 0 20px;
+        }
+        .section-header {
+          margin-bottom: 36px;
         }
         .section-title {
           font-size: 1.4rem;
+        }
+        .profile-image-wrap {
+          margin-bottom: 28px;
+        }
+        .about-grid {
+          gap: 36px;
         }
         .contact-links {
           flex-direction: column;
@@ -1124,15 +1136,24 @@
         .contact-email-big {
           text-align: center;
         }
+        .project-card {
+          padding: 22px;
+        }
+        .exp-item {
+          padding: 22px;
+        }
+        .achievement-item {
+          padding: 16px;
+        }
       }
 
       @media (min-width: 480px) {
         .profile-image {
-          width: 150px;
-          height: 150px;
+          width: 170px;
+          height: 170px;
         }
         .profile-image-wrap {
-          margin-bottom: 40px;
+          margin-bottom: 44px;
         }
       }
 
@@ -1144,8 +1165,8 @@
 
       @media (min-width: 641px) {
         .profile-image {
-          width: 160px;
-          height: 160px;
+          width: 190px;
+          height: 190px;
         }
         .profile-image-wrap {
           margin-bottom: 48px;
@@ -1154,8 +1175,8 @@
 
       @media (min-width: 768px) {
         .profile-image {
-          width: 180px;
-          height: 180px;
+          width: 210px;
+          height: 210px;
         }
       }
 
@@ -1287,8 +1308,8 @@
             src="image.jpeg"
             alt="Krushna Lanke"
             class="profile-image"
-            width="180"
-            height="180"
+            width="210"
+            height="210"
             loading="lazy"
             decoding="async"
           />
