@@ -191,6 +191,28 @@
   .section-label::before { content: ''; width: 24px; height: 1px; background: var(--text-dim); }
   .section-title { font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
 
+  /* ─── Profile Image ─── */
+  .profile-image-wrap {
+    display: flex; justify-content: center; margin-bottom: 32px;
+  }
+  .profile-image {
+    width: 120px; height: 120px; border-radius: 50%;
+    object-fit: cover; object-position: center top;
+    border: 2px solid var(--border2);
+    filter: grayscale(20%);
+    transition: filter 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
+    box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px var(--border);
+    will-change: transform;
+  }
+  @media (hover: hover) {
+    .profile-image:hover {
+      filter: grayscale(0%);
+      border-color: #444;
+      box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px #444, 0 0 30px rgba(255,255,255,0.04);
+      transform: scale(1.03);
+    }
+  }
+
   /* ─── About ─── */
   #about { border-top: 1px solid var(--border); }
   .about-grid { display: grid; grid-template-columns: 1fr; gap: 48px; }
@@ -453,8 +475,22 @@
     .contact-email-big { text-align: center; }
   }
 
+  @media (min-width: 480px) {
+    .profile-image { width: 150px; height: 150px; }
+    .profile-image-wrap { margin-bottom: 40px; }
+  }
+
   @media (min-width: 641px) and (max-width: 900px) {
     .hero-stats { gap: 16px; }
+  }
+
+  @media (min-width: 641px) {
+    .profile-image { width: 160px; height: 160px; }
+    .profile-image-wrap { margin-bottom: 48px; }
+  }
+
+  @media (min-width: 768px) {
+    .profile-image { width: 180px; height: 180px; }
   }
 
   /* ─── About two-col on desktop ─── */
@@ -551,6 +587,9 @@
     <div class="section-header reveal">
       <div class="section-label">01 — About</div>
       <h2 class="section-title">Who I am</h2>
+    </div>
+    <div class="profile-image-wrap reveal">
+      <img src="image.jpeg" alt="Krushna Lanke" class="profile-image" width="180" height="180" loading="lazy" decoding="async" />
     </div>
     <div class="about-grid">
       <div class="about-text reveal">
