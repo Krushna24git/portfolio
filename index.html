@@ -906,6 +906,271 @@
         position: relative;
         z-index: 1;
         background: var(--surface);
+        flex-wrap: wrap;
+        gap: 8px 12px;
+      }
+      .footer-sep {
+        color: var(--text-muted);
+      }
+      .footer-version {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: transparent;
+        border: none;
+        padding: 0;
+        font: inherit;
+        color: var(--text-dim);
+        cursor: none;
+        transition: color 0.2s;
+      }
+      .footer-version:hover {
+        color: var(--text);
+      }
+
+      /* ─── Changelog ─── */
+      html.changelog-open {
+        overflow: hidden;
+      }
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .version-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 3px 9px;
+        background: transparent;
+        border: 1px solid var(--border2);
+        border-radius: 100px;
+        font-family: var(--mono);
+        font-size: 0.62rem;
+        color: var(--text-dim);
+        letter-spacing: 0.04em;
+        cursor: none;
+        transition: all 0.2s;
+      }
+      .version-chip:hover {
+        border-color: #555;
+        color: var(--text);
+      }
+      .new-dot {
+        display: none;
+        width: 5px;
+        height: 5px;
+        background: #4ade80;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+      .has-new .new-dot {
+        display: block;
+      }
+      .changelog-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.3s,
+          visibility 0s linear 0.3s;
+      }
+      .changelog-backdrop.open {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.3s;
+      }
+      .changelog {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 201;
+        width: min(440px, 100%);
+        display: flex;
+        flex-direction: column;
+        background: var(--surface);
+        border-left: 1px solid var(--border);
+        transform: translateX(100%);
+        visibility: hidden;
+        transition:
+          transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+          visibility 0s linear 0.45s;
+      }
+      .changelog.open {
+        transform: none;
+        visibility: visible;
+        transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .changelog-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 28px 28px 20px;
+        border-bottom: 1px solid var(--border);
+      }
+      .changelog-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+      }
+      .changelog-close {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        background: transparent;
+        border: 1px solid var(--border2);
+        border-radius: 4px;
+        font-family: var(--mono);
+        font-size: 0.65rem;
+        color: var(--text-dim);
+        letter-spacing: 0.06em;
+        cursor: none;
+        /* not `all` — a transitioning `visibility` blocks focus() on open */
+        transition:
+          border-color 0.2s,
+          color 0.2s;
+      }
+      .changelog-close:hover {
+        border-color: #555;
+        color: var(--text);
+      }
+      .changelog-cmd {
+        padding: 14px 28px;
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        color: var(--text);
+        border-bottom: 1px solid var(--border);
+      }
+      .changelog-cmd .prompt {
+        color: #4ade80;
+        margin-right: 8px;
+      }
+      .changelog-list {
+        list-style: none;
+        flex: 1;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding: 28px;
+      }
+      .changelog-list:focus-visible {
+        outline: 1px solid var(--border2);
+        outline-offset: -1px;
+      }
+      .cl-entry {
+        position: relative;
+        padding-left: 26px;
+        padding-bottom: 28px;
+      }
+      .cl-entry:last-child {
+        padding-bottom: 0;
+      }
+      /* timeline dot */
+      .cl-entry::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 5px;
+        width: 9px;
+        height: 9px;
+        border: 1px solid #555;
+        border-radius: 50%;
+        background: var(--surface);
+        z-index: 1;
+      }
+      /* timeline rail */
+      .cl-entry::after {
+        content: "";
+        position: absolute;
+        left: 4px;
+        top: 14px;
+        bottom: -5px;
+        width: 1px;
+        background: var(--border2);
+      }
+      .cl-entry:last-child::after {
+        display: none;
+      }
+      .cl-entry.is-latest::before {
+        background: #4ade80;
+        border-color: #4ade80;
+        animation: pulse 2s infinite;
+      }
+      .changelog.open .cl-entry {
+        animation: fadeUp 0.5s ease both;
+        animation-delay: calc(0.15s + var(--i) * 0.06s);
+      }
+      .cl-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: var(--mono);
+        font-size: 0.68rem;
+      }
+      .cl-version {
+        color: var(--text);
+        font-weight: 600;
+      }
+      .cl-latest {
+        padding: 1px 7px;
+        border: 1px solid rgba(74, 222, 128, 0.35);
+        border-radius: 100px;
+        color: #4ade80;
+        font-size: 0.58rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .cl-date {
+        margin-left: auto;
+        color: var(--text-dim);
+      }
+      .cl-title {
+        margin-top: 8px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+      .cl-changes {
+        list-style: none;
+        margin-top: 10px;
+        display: grid;
+        gap: 8px;
+      }
+      .cl-changes li {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        font-size: 0.8rem;
+        font-weight: 300;
+        line-height: 1.6;
+        color: var(--text-dim);
+      }
+      .cl-type {
+        flex-shrink: 0;
+        width: 44px;
+        padding: 1px 0;
+        text-align: center;
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        font-family: var(--mono);
+        font-size: 0.6rem;
+        color: var(--text-dim);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .changelog,
+        .changelog-backdrop {
+          transition: none;
+        }
+        .changelog.open .cl-entry {
+          animation: none;
+        }
       }
 
       /* ─── Reveal Animation ─── */
@@ -1117,6 +1382,11 @@
         }
         footer {
           padding: 24px 16px;
+          flex-direction: column;
+          gap: 6px;
+        }
+        .footer-sep {
+          display: none;
         }
         #cursor,
         #cursor-ring {
@@ -1164,6 +1434,28 @@
         }
         .achievement-item {
           padding: 16px;
+        }
+        .changelog {
+          top: auto;
+          left: 0;
+          width: 100%;
+          max-height: 85svh;
+          border-left: none;
+          border-top: 1px solid var(--border2);
+          border-radius: 14px 14px 0 0;
+          transform: translateY(100%);
+        }
+        .changelog-head {
+          padding: 22px 20px 16px;
+        }
+        .changelog-esc {
+          display: none;
+        }
+        .changelog-cmd {
+          padding: 12px 20px;
+        }
+        .changelog-list {
+          padding: 22px 20px calc(22px + env(safe-area-inset-bottom));
         }
       }
 
@@ -1221,7 +1513,17 @@
 
     <!-- Nav -->
     <nav id="navbar">
-      <a href="#hero" class="nav-logo">KL</a>
+      <div class="nav-brand">
+        <a href="#hero" class="nav-logo">KL</a>
+        <button
+          class="version-chip"
+          data-changelog-open
+          aria-haspopup="dialog"
+          aria-controls="changelog"
+        >
+          <span data-version></span><span class="new-dot"></span>
+        </button>
+      </div>
       <ul class="nav-links">
         <li><a href="#about">about</a></li>
         <li><a href="#skills">skills</a></li>
@@ -1807,7 +2109,55 @@
     <!-- Footer -->
     <footer>
       <span>© 2026 Krushna Lanke.</span>
+      <span class="footer-sep">·</span>
+      <button
+        class="footer-version"
+        data-changelog-open
+        aria-haspopup="dialog"
+        aria-controls="changelog"
+      >
+        <span class="new-dot"></span>
+        <span><span data-version></span> · updated <span data-updated></span></span>
+      </button>
     </footer>
+
+    <!-- Changelog -->
+    <div class="changelog-backdrop" id="changelogBackdrop"></div>
+    <aside
+      class="changelog"
+      id="changelog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="changelogTitle"
+    >
+      <div class="changelog-head">
+        <div>
+          <div class="section-label">Changelog</div>
+          <h2 class="changelog-title" id="changelogTitle">What's new</h2>
+        </div>
+        <button
+          class="changelog-close"
+          id="changelogClose"
+          aria-label="Close changelog"
+        >
+          <span class="changelog-esc">esc</span>
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M18 6 6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="changelog-cmd">
+        <span class="prompt">~/krushna $</span>git log --releases
+      </div>
+      <ol class="changelog-list" id="changelogList" tabindex="0"></ol>
+    </aside>
 
     <script>
       // ─── Custom Cursor ───
@@ -1952,6 +2302,155 @@
         },
         { passive: true },
       );
+
+      // ─── Changelog ───
+      // Newest first — add a new entry at the top for every release.
+      const changelog = [
+        {
+          version: "1.3.0",
+          date: "2026-09-30",
+          title: "Changelog",
+          changes: [
+            ["feat", "This changelog: every update to the site, versioned and dated."],
+            ["feat", "Version tag in the nav and footer. A green dot means there's a release you haven't seen."],
+          ],
+        },
+        {
+          version: "1.2.0",
+          date: "2026-09-30",
+          title: "New role",
+          changes: [
+            ["feat", "Joined Stealthera Innovations as a Software Engineer Intern, building stealthera.in."],
+            ["feat", "Promoted from Documentation Head to Vice President of CSI, VIT."],
+            ["chore", "About section and page description updated to match."],
+          ],
+        },
+        {
+          version: "1.1.2",
+          date: "2026-03-10",
+          title: "Working links",
+          changes: [
+            ["fix", "GitHub links now point to github.com/Krushna24git."],
+            ["fix", "LinkedIn button now opens the right profile."],
+          ],
+        },
+        {
+          version: "1.1.1",
+          date: "2026-03-10",
+          title: "Layout polish",
+          changes: [
+            ["fix", "No more sideways scrolling on phones; the terminal line truncates instead of overflowing."],
+            ["chore", "Consistent card padding on mobile and a larger profile photo."],
+          ],
+        },
+        {
+          version: "1.1.0",
+          date: "2026-03-10",
+          title: "Profile photo",
+          changes: [["feat", "Added a profile photo to the About section."]],
+        },
+        {
+          version: "1.0.0",
+          date: "2026-03-10",
+          title: "Launch",
+          changes: [
+            ["feat", "First release: about, skills, projects, experience, certifications, achievements and contact."],
+            ["feat", "Custom cursor, terminal typewriter and scroll-reveal animations."],
+          ],
+        },
+      ];
+      const latest = changelog[0];
+      const months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split(" ");
+      const fmtDate = (iso) => {
+        const [y, m, d] = iso.split("-");
+        return `${+d} ${months[m - 1]} ${y}`;
+      };
+
+      document.getElementById("changelogList").innerHTML = changelog
+        .map(
+          (r, i) => `
+            <li class="cl-entry${i === 0 ? " is-latest" : ""}" style="--i: ${i}">
+              <div class="cl-meta">
+                <span class="cl-version">v${r.version}</span>
+                ${i === 0 ? '<span class="cl-latest">latest</span>' : ""}
+                <time class="cl-date" datetime="${r.date}">${fmtDate(r.date)}</time>
+              </div>
+              <div class="cl-title">${r.title}</div>
+              <ul class="cl-changes">
+                ${r.changes
+                  .map(
+                    ([type, text]) =>
+                      `<li><span class="cl-type">${type}</span><span>${text}</span></li>`,
+                  )
+                  .join("")}
+              </ul>
+            </li>`,
+        )
+        .join("");
+      document
+        .querySelectorAll("[data-version]")
+        .forEach((el) => (el.textContent = "v" + latest.version));
+      document
+        .querySelectorAll("[data-updated]")
+        .forEach((el) => (el.textContent = fmtDate(latest.date)));
+
+      const clPanel = document.getElementById("changelog");
+      const clBackdrop = document.getElementById("changelogBackdrop");
+      const clClose = document.getElementById("changelogClose");
+      const clList = document.getElementById("changelogList");
+      const clTriggers = document.querySelectorAll("[data-changelog-open]");
+      const SEEN_KEY = "kl-changelog-seen";
+      let clReturnFocus = null;
+
+      let seenVersion = null;
+      try {
+        seenVersion = localStorage.getItem(SEEN_KEY);
+      } catch (e) {}
+      if (seenVersion !== latest.version) {
+        clTriggers.forEach((t) => t.classList.add("has-new"));
+      }
+
+      function setChangelog(open) {
+        clPanel.classList.toggle("open", open);
+        clBackdrop.classList.toggle("open", open);
+        document.documentElement.classList.toggle("changelog-open", open);
+        if (open) {
+          clReturnFocus = document.activeElement;
+          clList.scrollTop = 0;
+          clClose.focus({ preventScroll: true });
+          clTriggers.forEach((t) => t.classList.remove("has-new"));
+          try {
+            localStorage.setItem(SEEN_KEY, latest.version);
+          } catch (e) {}
+        } else if (clReturnFocus) {
+          clReturnFocus.focus({ preventScroll: true });
+        }
+      }
+      clTriggers.forEach((t) =>
+        t.addEventListener("click", () => setChangelog(true)),
+      );
+      clClose.addEventListener("click", () => setChangelog(false));
+      clBackdrop.addEventListener("click", () => setChangelog(false));
+      document.addEventListener("keydown", (e) => {
+        if (!clPanel.classList.contains("open")) return;
+        if (e.key === "Escape") {
+          setChangelog(false);
+        } else if (e.key === "Tab") {
+          // keep focus inside the panel while it's open
+          const first = clClose;
+          const last = clList;
+          if (!clPanel.contains(document.activeElement)) {
+            e.preventDefault();
+            first.focus();
+          } else if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      });
     </script>
   </body>
 </html>
